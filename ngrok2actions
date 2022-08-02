@@ -22,12 +22,12 @@ LOG_FILE='/tmp/ngrok.log'
 TELEGRAM_LOG="/tmp/telegram.log"
 CONTINUE_FILE="/tmp/continue"
 
-if [[ -z "${NGROK_TOKEN}" ]]; then
+if [[ -z "${ngrok_token}" ]]; then
     echo -e "${ERROR} Please set 'NGROK_TOKEN' environment variable."
     exit 2
 fi
 
-if [[ -z "${SSH_PASSWORD}" && -z "${SSH_PUBKEY}" && -z "${GH_SSH_PUBKEY}" ]]; then
+if [[ -z "${ssh_password}" && -z "${ssh_pubkey}" ]]; then
     echo -e "${ERROR} Please set 'SSH_PASSWORD' environment variable."
     exit 3
 fi
@@ -58,17 +58,17 @@ else
     exit 1
 fi
 
-if [[ -n "${SSH_PASSWORD}" ]]; then
+if [[ -n "${ssh_password}" ]]; then
     echo -e "${INFO} Set user(${USER}) password ..."
-    echo -e "${SSH_PASSWORD}\n${SSH_PASSWORD}" | sudo passwd "${USER}"
+    echo -e "${ssh_password}\n${ssh_password}" | sudo passwd "${USER}"
 fi
 
 echo -e "${INFO} Start ngrok proxy for SSH port..."
 screen -dmS ngrok \
     ngrok tcp 22 \
     --log "${LOG_FILE}" \
-    --authtoken "${NGROK_TOKEN}" \
-    --region "${NGROK_REGION:-us}"
+    --authtoken "${ngrok_token}" \
+    --region "${ngrok_region:-us}"
 
 while ((${SECONDS_LEFT:=10} > 0)); do
     echo -e "${INFO} Please wait ${SECONDS_LEFT}s ..."
