@@ -1,6 +1,5 @@
 env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
-    CIRRUS_WORKING_DIR: "/tmp/ci"
 
     NGROK_TOKEN: 
     NGROK_REGION: us
@@ -8,11 +7,11 @@ env: # Environment variables to pass to all tasks
     TELEGRAM_BOT_TOKEN:
     TELEGRAM_CHAT_ID:
 
-    user_version: 2
-
 task:
     name: SSH Keepalive Hack
     timeout_in: 260m
+    container:
+        image: ubuntu:22.04
      cpu: 8
      memory: 32G
      start: |
