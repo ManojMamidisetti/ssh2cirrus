@@ -16,18 +16,18 @@ task:
       image: ubuntu:22.04
       cpu: 8
       memory: 32G
-    sshhack: |
+     sshhack: |
 	    - mkdir -p ~/.ssh
 	    - cat << EOF > ~/.ssh/config
 	    - Host *
-	    -    ServerAliveInterval 60
-	    -   StrictHostKeyChecking no
+	    - ServerAliveInterval 60
+	    - StrictHostKeyChecking no
 	    - Host cirrus-ci.com
-	    -   User cirrus
-	    -    Port 22
-	    -     Hostname cirrus-ci.com
-	    -     TCPKeepAlive yes
-	    -     IdentitiesOnly yes
+	    - User cirrus
+	    - Port 22
+	    - Hostname cirrus-ci.com
+	    - TCPKeepAlive yes
+	    - IdentitiesOnly yes
 	    - EOF
     excute_ssh:
-      - bash 
+      - ./ngrok2actions.sh
