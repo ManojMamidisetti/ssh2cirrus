@@ -8,25 +8,25 @@ env: # Environment variables to pass to all tasks
     TELEGRAM_CHAT_ID:
 
 task:
-    name: SSH Keepalive Hack
-    timeout_in: 260m
-    container:
+  name: SSH Keepalive Hack
+  timeout_in: 260m
+      container:
         image: ubuntu:22.04
-     cpu: 8
-     memory: 32G
-     start: |
-       - mkdir -p ~/.ssh
-       - cat << EOF > ~/.ssh/config
-       - Host *
-       -    ServerAliveInterval 60
-       -   StrictHostKeyChecking no
-       - Host cirrus-ci.com
-       -   User cirrus
-       -    Port 22
-       -     Hostname cirrus-ci.com
-       -     TCPKeepAlive yes
-       -     IdentitiesOnly yes
-       - EOF
+        cpu: 8
+        memory: 32G
+  start: |
+    - mkdir -p ~/.ssh
+    - cat << EOF > ~/.ssh/config
+    - Host *
+    -    ServerAliveInterval 60
+    -   StrictHostKeyChecking no
+    - Host cirrus-ci.com
+    -   User cirrus
+    -    Port 22
+    -     Hostname cirrus-ci.com
+    -     TCPKeepAlive yes
+    -     IdentitiesOnly yes
+    - EOF
 
-     done: 
-       - bash ngrok2actions.sh
+  done: 
+    - bash ngrok2actions.sh
