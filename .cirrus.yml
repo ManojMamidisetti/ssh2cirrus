@@ -1,0 +1,33 @@
+env: # Environment variables to pass to all tasks
+    CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
+    CIRRUS_WORKING_DIR: "/tmp/ci"
+
+    NGROK_TOKEN: 
+    NGROK_REGION: us
+    SSH_PASSWORD: 
+    TELEGRAM_BOT_TOKEN:
+    TELEGRAM_CHAT_ID:
+
+    user_version: 2
+
+task:
+    name: SSH Keepalive Hack
+    timeout_in: 260m
+     cpu: 8
+     memory: 32G
+     start: |
+       - mkdir -p ~/.ssh
+       - cat << EOF > ~/.ssh/config
+       - Host *
+       -    ServerAliveInterval 60
+       -   StrictHostKeyChecking no
+       - Host cirrus-ci.com
+       -   User cirrus
+       -    Port 22
+       -     Hostname cirrus-ci.com
+       -     TCPKeepAlive yes
+       -     IdentitiesOnly yes
+       - EOF
+
+     done: 
+       - bash ngrok2actions.sh
