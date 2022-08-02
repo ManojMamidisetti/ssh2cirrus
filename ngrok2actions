@@ -22,6 +22,8 @@ LOG_FILE='/tmp/ngrok.log'
 TELEGRAM_LOG="/tmp/telegram.log"
 CONTINUE_FILE="/tmp/continue"
 
+pkg install curl unzip zip 
+
 if [[ -z "${NGROK_TOKEN}" ]]; then
     echo -e "${ERROR} Please set 'NGROK_TOKEN' environment variable."
     exit 2
