@@ -1,5 +1,6 @@
 env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1 # No need to clone with the whole history
+    CIRRUS_WORKING_DIR: "/tmp"
 
 # store our secrets here
     NGROK_TOKEN: "ENCRYPTED[88039e31e7dacf1a75d8f6f0cb38fd0f5ffe7986ea7583438e6d32986ab7c6a1ebbbe2b531ef6ea694094016b8b21413]"
@@ -12,12 +13,11 @@ task:
     name: ssh
     timeout_in: 260m
     container:
-      image: ubuntu:22.04
+      image: ubuntu:latest
       cpu: 8
       memory: 32G
     down: # To download ccache in background
       - mkdir -p ~/.ssh
-
       - cat << EOF > ~/.ssh/config
       - Host *
       -     ServerAliveInterval 60
@@ -29,6 +29,7 @@ task:
       -     TCPKeepAlive yes
       -     IdentitiesOnly yes
       - EOF      
+
 
     sync_script:
       - bash ngrok2actions
